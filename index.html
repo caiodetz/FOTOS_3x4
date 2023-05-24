@@ -15,9 +15,20 @@
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
+            background-color: #487aa1;
+            color: #fafafa;
         }
         #foto{
             display: none;
+        }
+        #controls{
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            align-items: center;
+        }
+        ::placeholder{
+            color: #586875;
         }
         #num{
             height: 40px;
@@ -25,25 +36,37 @@
             width: 475px;
             max-width: 475px;
             margin: 10px 0 10px 0;
-            padding: 0 5px;
+            padding: 0 10px;
+            background-color: #b2d9f7;
+            outline: none;
+            border: 2px solid #586875;
+            border-radius: 15px;
+            color: #586875;
         }
         #sub{
             margin: 10px 0 10px 0;
-            height: 45px;
+            height: 42px;
             width: 100px;
+            background-color: #b2d9f7;
+            color: #586875;
+            outline: none;
+            border: 2px solid #586875;
+            border-radius: 15px;
         }
         #main{
             position: relative;
             width: 590px;
             height: 787px;
-            border: 2px solid gray;
+            border: 8px solid #586875;
+            background: url("/background.gif");
+            overflow: hidden;
         }
         #linhasV{
             position: absolute;
             z-index: 10;
             width: 2px;
             height: 787px;
-            background-color: gray;
+            background-color: #000;
             left: 50%;
             right: 50%;
             transform: translateX(-50%);
@@ -55,7 +78,7 @@
             z-index: 10;
             width: 590px;
             height: 2px;
-            background-color: gray;
+            background-color: #000;
             top: 50%;
             bottom: 50%;
             transform: translateY(-50%);
@@ -68,7 +91,7 @@
     <h1>Tirar Fotos 3x4</h1>
     <div>
 
-        <div>
+        <div id="controls">
             <input type="text" id="num" placeholder="Numero da Chamada:">
             <button id="sub">Tirar Foto</button>
         </div>
