@@ -6,24 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camera São Domingos</title>
     <style>
+        html,
         body{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             display: flex;
             flex: 1;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            box-sizing: border-box;
         }
         #foto{
             display: none;
         }
         #num{
             height: 40px;
-            width: 500px;
+            max-height: 40px;
+            width: 475px;
+            max-width: 475px;
             margin: 10px 0 10px 0;
+            padding: 0 5px;
         }
         #sub{
-            height: 40px;
+            margin: 10px 0 10px 0;
+            height: 45px;
             width: 100px;
+        }
+        #main{
+            position: relative;
+            width: 590px;
+            height: 787px;
+            border: 2px solid gray;
+        }
+        #linhasV{
+            position: absolute;
+            z-index: 10;
+            width: 2px;
+            height: 787px;
+            background-color: gray;
+            left: 50%;
+            right: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+        
+        #linhasH{
+            position: absolute;
+            z-index: 10;
+            width: 590px;
+            height: 2px;
+            background-color: gray;
+            top: 50%;
+            bottom: 50%;
+            transform: translateY(-50%);
+            opacity: 0.3;
         }
 
     </style>
@@ -37,8 +73,11 @@
             <button id="sub">Tirar Foto</button>
         </div>
         <div>
-    
-            <video id="prev"></video>
+            <div id="main">
+                <div id="linhasV"></div>
+                <div id="linhasH"></div>
+                <video id="prev"></video>
+            </div>
             <canvas id="foto"></canvas>
         </div>
     </div>
@@ -58,17 +97,22 @@
             start()
         })
 
+
+        function downloadFile(filePath, fileName){
+            var link=document.createElement('a');
+            link.href = filePath;
+            link.download = fileName;
+            link.click();
+        }
+
         btn.addEventListener("click", ()=>{
             var foto = document.querySelector("#foto")
             foto.width = video.videoWidth
             foto.height = video.videoHeight
             var context = foto.getContext('2d')
             context.drawImage(video, 0,0)
-            var link = document.createElement('a')
-            link.download = `${id.value}.png`
-            link.href = foto.toDataURL()
-            link.textContent = `Download.png`
-            document.appendChild(link)
+            downloadFile(foto.toDataURL(), `${id.value}.png`)
+
         })
 
         
