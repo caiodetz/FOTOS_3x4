@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera São Domingos</title>
+    <style>
+        body{
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #foto{
+            display: none;
+        }
+        #num{
+            height: 40px;
+            width: 500px;
+            margin: 10px 0 10px 0;
+        }
+        #sub{
+            height: 40px;
+            width: 100px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Tirar Fotos 3x4</h1>
+    <div>
+
+        <div>
+            <input type="text" id="num" placeholder="Numero da Chamada:">
+            <button id="sub">Tirar Foto</button>
+        </div>
+        <div>
+    
+            <video id="prev"></video>
+            <canvas id="foto"></canvas>
+        </div>
+    </div>
+
+    <script>
+        var video = document.querySelector("#prev")
+        var btn = document.querySelector("#sub")
+        var id = document.querySelector("#num")
+        const start = ()=>{
+            navigator.mediaDevices.getUserMedia({video:{width:590, height:787, aspectRatio: 3/4}}).then(media=>{
+                video.srcObject = media
+                video.play()
+            })
+        }
+
+        addEventListener("DOMContentLoaded", ()=>{
+            start()
+        })
+
+        btn.addEventListener("click", ()=>{
+            var foto = document.querySelector("#foto")
+            foto.width = video.videoWidth
+            foto.height = video.videoHeight
+            var context = foto.getContext('2d')
+            context.drawImage(video, 0,0)
+            var link = document.createElement('a')
+            link.download = `${id.value}.png`
+            link.href = foto.toDataURL()
+            link.textContent = `Download.png`
+            document.appendChild(link)
+        })
+
+        
+    </script>
+</body>
+</html>
