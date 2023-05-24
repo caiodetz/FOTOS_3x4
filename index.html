@@ -91,10 +91,10 @@
     <h1>Tirar Fotos 3x4</h1>
     <div>
 
-        <div id="controls">
+        <form id="controls">
             <input type="text" id="num" placeholder="Numero da Chamada:">
-            <button id="sub">Tirar Foto</button>
-        </div>
+            <button id="sub" type="submit">Tirar Foto</button>
+        </form>
         <div>
             <div id="main">
                 <div id="linhasV"></div>
@@ -120,7 +120,6 @@
             start()
         })
 
-
         function downloadFile(filePath, fileName){
             var link=document.createElement('a');
             link.href = filePath;
@@ -128,16 +127,21 @@
             link.click();
         }
 
-        btn.addEventListener("click", ()=>{
+        function foto(){
             var foto = document.querySelector("#foto")
             foto.width = video.videoWidth
             foto.height = video.videoHeight
             var context = foto.getContext('2d')
             context.drawImage(video, 0,0)
             downloadFile(foto.toDataURL(), `${id.value}.png`)
+        }
 
+        btn.addEventListener("click", (e)=>{
+            e.preventDefault()
+            foto()
         })
 
+        
         
     </script>
 </body>
