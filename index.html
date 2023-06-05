@@ -1,149 +1,150 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Camera São Domingos</title>
-    <link rel="shortcut icon" href="/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
     <style>
-        html,
-        body{
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            display: flex;
-            flex: 1;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            background-color: #487aa1;
-            color: #fafafa;
-        }
-        #foto{
-            display: none;
-        }
-        #controls{
-            display: flex;
-            flex: 1;
-            justify-content: space-between;
-            align-items: center;
-        }
-        ::placeholder{
-            color: #586875;
-        }
-        #num{
-            height: 40px;
-            max-height: 40px;
-            width: 475px;
-            max-width: 475px;
-            margin: 10px 0 10px 0;
-            padding: 0 10px;
-            background-color: #b2d9f7;
-            outline: none;
-            border: 2px solid #586875;
-            border-radius: 15px;
-            color: #586875;
-        }
-        #sub{
-            margin: 10px 0 10px 0;
-            height: 42px;
-            width: 100px;
-            background-color: #b2d9f7;
-            color: #586875;
-            outline: none;
-            border: 2px solid #586875;
-            border-radius: 15px;
-        }
-        #main{
-            position: relative;
-            width: 590px;
-            height: 787px;
-            border: 8px solid #586875;
-            background: url("/background.gif");
-            overflow: hidden;
-        }
-        #linhasV{
-            position: absolute;
-            z-index: 10;
-            width: 2px;
-            height: 787px;
-            background-color: #000;
-            left: 50%;
-            right: 50%;
-            transform: translateX(-50%);
-            opacity: 0.3;
-        }
-        
-        #linhasH{
-            position: absolute;
-            z-index: 10;
-            width: 590px;
-            height: 2px;
-            background-color: #000;
-            top: 50%;
-            bottom: 50%;
-            transform: translateY(-50%);
-            opacity: 0.3;
-        }
+      html,
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        background-color: #487aa1;
+        color: #fafafa;
+      }
+      #foto {
+        display: none;
+      }
+      #controls {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        align-items: center;
+      }
+      ::placeholder {
+        color: #586875;
+      }
+      #num {
+        height: 40px;
+        max-height: 40px;
+        width: 475px;
+        max-width: 475px;
+        margin: 10px 0 10px 0;
+        padding: 0 10px;
+        background-color: #b2d9f7;
+        outline: none;
+        border: 2px solid #586875;
+        border-radius: 15px;
+        color: #586875;
+      }
+      #sub {
+        margin: 10px 0 10px 0;
+        height: 42px;
+        width: 100px;
+        background-color: #b2d9f7;
+        color: #586875;
+        outline: none;
+        border: 2px solid #586875;
+        border-radius: 15px;
+      }
+      #main {
+        position: relative;
+        width: 590px;
+        height: 787px;
+        border: 8px solid #586875;
+        background: url("/background.gif");
+        overflow: hidden;
+      }
+      #linhasV {
+        position: absolute;
+        z-index: 10;
+        width: 2px;
+        height: 787px;
+        background-color: #000;
+        left: 50%;
+        right: 50%;
+        transform: translateX(-50%);
+        opacity: 0.3;
+      }
 
+      #linhasH {
+        position: absolute;
+        z-index: 10;
+        width: 590px;
+        height: 2px;
+        background-color: #000;
+        top: 50%;
+        bottom: 50%;
+        transform: translateY(-50%);
+        opacity: 0.3;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Tirar Fotos 3x4</h1>
     <div>
-
-        <form id="controls">
-            <input type="text" id="num" placeholder="Numero da Chamada:">
-            <button id="sub" type="submit">Tirar Foto</button>
-        </form>
-        <div>
-            <div id="main">
-                <div id="linhasV"></div>
-                <div id="linhasH"></div>
-                <video id="prev"></video>
-            </div>
-            <canvas id="foto"></canvas>
+      <form id="controls">
+        <input type="text" id="num" placeholder="Numero da Chamada:" />
+        <button id="sub" type="submit">Tirar Foto</button>
+      </form>
+      <div>
+        <div id="main">
+          <div id="linhasV"></div>
+          <div id="linhasH"></div>
+          <video id="prev"></video>
         </div>
+        <canvas id="foto"></canvas>
+      </div>
     </div>
 
     <script>
-        var video = document.querySelector("#prev")
-        var btn = document.querySelector("#sub")
-        var id = document.querySelector("#num")
-        const start = ()=>{
-            navigator.mediaDevices.getUserMedia({video:{width:590, height:787, aspectRatio: 3/4}}).then(media=>{
-                video.srcObject = media
-                video.play()
-            })
-        }
+      var video = document.querySelector("#prev");
+      var btn = document.querySelector("#sub");
+      var id = document.querySelector("#num");
+      const start = () => {
+        navigator.mediaDevices
+          .getUserMedia({
+            video: { width: 590, height: 787, aspectRatio: 3 / 4 },
+          })
+          .then((media) => {
+            video.srcObject = media;
+            video.play();
+          });
+      };
 
-        addEventListener("DOMContentLoaded", ()=>{
-            start()
-        })
+      addEventListener("DOMContentLoaded", () => {
+        start();
+      });
 
-        function downloadFile(filePath, fileName){
-            var link=document.createElement('a');
-            link.href = filePath;
-            link.download = fileName;
-            link.click();
-        }
+      function downloadFile(filePath, fileName) {
+        var link = document.createElement("a");
+        link.href = filePath;
+        link.download = fileName;
+        link.click();
+      }
 
-        function foto(){
-            var foto = document.querySelector("#foto")
-            foto.width = video.videoWidth
-            foto.height = video.videoHeight
-            var context = foto.getContext('2d')
-            context.drawImage(video, 0,0)
-            downloadFile(foto.toDataURL(), `${id.value}.png`)
-        }
+      function foto() {
+        var foto = document.querySelector("#foto");
+        foto.width = video.videoWidth;
+        foto.height = video.videoHeight;
+        var context = foto.getContext("2d");
+        context.drawImage(video, 0, 0);
+        downloadFile(foto.toDataURL(), `${id.value}.jpeg`);
+      }
 
-        btn.addEventListener("click", (e)=>{
-            e.preventDefault()
-            foto()
-        })
-
-        
-        
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        foto();
+      });
     </script>
-</body>
+  </body>
 </html>
