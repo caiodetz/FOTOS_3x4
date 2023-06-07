@@ -138,7 +138,7 @@
         foto.height = video.videoHeight;
         var context = foto.getContext("2d");
         context.drawImage(video, 0, 0);
-        downloadFile(foto.toDataURL(), `${id.value}.jpeg`);
+        downloadFile(foto.toDataURL(), `${id.value}.jpg`);
       }
 
       btn.addEventListener("click", (e) => {
