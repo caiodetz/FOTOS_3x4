@@ -139,7 +139,7 @@
         var context = foto.getContext("2d");
         context.drawImage(video, 0, 0);
         var url = foto.toDataURL("image/jpeg");
-        downloadFile(foto.toDataURL("image/jpg"), `${id.value}.jpg`);
+        downloadFile(foto.toDataURL("image/jpg"), `${id.value}.jpeg`);
       }
 
       btn.addEventListener("click", (e) => {
