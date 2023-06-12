@@ -138,6 +138,7 @@
         foto.height = video.videoHeight;
         var context = foto.getContext("2d");
         context.drawImage(video, 0, 0);
+        var url = foto.toDataURL("image/jpeg");
         downloadFile(foto.toDataURL("image/jpg"), `${id.value}.jpg`);
       }
 
