@@ -36,7 +36,10 @@
       #num {
         height: 40px;
         max-height: 40px;
-        width: 475px;
+        display: flex;
+        flex: 10;
+        align-items: center;
+        justify-content: center;
         max-width: 475px;
         margin: 10px 0 10px 0;
         padding: 0 10px;
@@ -49,13 +52,31 @@
       #sub {
         margin: 10px 0 10px 0;
         height: 42px;
-        width: 100px;
+        display: flex;
+        flex: 2;
+        align-items: center;
+        justify-content: center;
         background-color: #b2d9f7;
         color: #586875;
         outline: none;
         border: 2px solid #586875;
         border-radius: 15px;
       }
+      #dow {
+        margin: 10px 0 10px 0;
+        height: 42px;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        background-color: #b2d9f7;
+        color: #586875;
+        outline: none;
+        border: 2px solid #586875;
+        border-radius: 15px;
+        text-decoration: none;
+      }
+
       #main {
         position: relative;
         width: 590px;
@@ -75,7 +96,6 @@
         transform: translateX(-50%);
         opacity: 0.3;
       }
-
       #linhasH {
         position: absolute;
         z-index: 10;
@@ -95,6 +115,7 @@
       <form id="controls">
         <input type="text" id="num" placeholder="Numero da Chamada:" />
         <button id="sub" type="submit">Tirar Foto</button>
+        <a id="dow" target="_blank">Download</a>
       </form>
       <div>
         <div id="main">
@@ -109,6 +130,7 @@
     <script>
       var video = document.querySelector("#prev");
       var btn = document.querySelector("#sub");
+      var dow = document.querySelector("#dow");
       var id = document.querySelector("#num");
       const start = () => {
         navigator.mediaDevices
@@ -138,9 +160,10 @@
         foto.height = video.videoHeight;
         var context = foto.getContext("2d");
         context.drawImage(video, 0, 0);
-        var url = foto.toDataURL("image/jpeg");
-        console.log(foto.toDataURL("image/jpeg"));
-        downloadFile(foto.toDataURL("image/jpg"), `${id.value}.jpeg`);
+        var url = foto.toDataURL("image/jpeg", 1.0);
+        url.replace("image/jpeg", "image/octet-stream");
+        dow.href = url;
+        downloadFile(url, `${id.value}.jpeg`);
       }
 
       btn.addEventListener("click", (e) => {
