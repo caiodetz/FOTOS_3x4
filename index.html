@@ -17,6 +17,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        height: 100vh;
         box-sizing: border-box;
         background-color: #487aa1;
         color: #fafafa;
@@ -79,7 +80,7 @@
       #main {
         position: relative;
         width: 590px;
-        height: 787px;
+        height: 590px;
         border: 8px solid #586875;
         background: url("/background.gif");
         overflow: hidden;
@@ -88,7 +89,7 @@
         position: absolute;
         z-index: 10;
         width: 2px;
-        height: 787px;
+        height: 590px;
         background-color: #000;
         left: 50%;
         right: 50%;
@@ -134,7 +135,7 @@
       const start = () => {
         navigator.mediaDevices
           .getUserMedia({
-            video: { width: 590, height: 787, aspectRatio: 3 / 4 },
+            video: { width: 590, height: 590, aspectRatio: 4 / 4 },
           })
           .then((media) => {
             video.srcObject = media;
