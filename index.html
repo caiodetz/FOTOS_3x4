@@ -127,6 +127,8 @@
       </div>
     </div>
 
+    <audio src="som.mp3" id="som">
+
     <script>
       var video = document.querySelector("#prev");
       var btn = document.querySelector("#sub");
@@ -166,8 +168,13 @@
         downloadFile(url, `${id.value}.jpeg`);
       }
 
+      function som(){
+        var som = document.getElementById("som")
+        som.play()
+      }
       btn.addEventListener("click", (e) => {
         e.preventDefault();
+        som();
         foto();
       });
     </script>
