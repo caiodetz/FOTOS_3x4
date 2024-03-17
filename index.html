@@ -127,7 +127,7 @@
       </div>
     </div>
 
-    <audio src="som.mp3" id="som">
+    <audio src="som.mp3" id="som"/>
 
     <script>
       var video = document.querySelector("#prev");
@@ -137,7 +137,7 @@
       const start = () => {
         navigator.mediaDevices
           .getUserMedia({
-            video: { width: 590, height: 590, aspectRatio: 4 / 4 },
+            video: { width: 590, height: 590, aspectRatio: 4 / 4, deviceId: {exact: "f76cd3909176579d9d25221486ebe869a021f04167a99c89e037123d22072adc"} },
           })
           .then((media) => {
             video.srcObject = media;
