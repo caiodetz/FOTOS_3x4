@@ -19,14 +19,14 @@
         justify-content: center;
         height: 100vh;
         box-sizing: border-box;
-        background-color: #487aa1;
+        background-color: #07101c;
         color: #fafafa;
       }
       #foto {
         display: none;
       }
       #controls {
-        display: flex;
+        display: none;
         flex: 1;
         justify-content: space-between;
         align-items: center;
@@ -53,7 +53,7 @@
       #sub {
         margin: 10px 0 10px 0;
         height: 42px;
-        display: flex;
+        display: none;
         flex: 2;
         align-items: center;
         justify-content: center;
@@ -69,7 +69,7 @@
         display: none;
         align-items: center;
         justify-content: center;
-        background-color: #b2d9f7;
+
         color: #586875;
         outline: none;
         border: 2px solid #586875;
@@ -79,13 +79,14 @@
 
       #main {
         position: relative;
-        width: 590px;
-        height: 590px;
+        width: 100vw;
+        height: 100vh;
         border: 8px solid #586875;
         background: url("/background.gif");
         overflow: hidden;
       }
       #linhasV {
+        display: none;
         position: absolute;
         z-index: 10;
         width: 2px;
@@ -97,6 +98,7 @@
         opacity: 0.3;
       }
       #linhasH {
+        display: none;
         position: absolute;
         z-index: 10;
         width: 590px;
@@ -107,75 +109,40 @@
         transform: translateY(-50%);
         opacity: 0.3;
       }
+      #prev {
+        width: 100%;
+        height: 100%;
+      }
     </style>
   </head>
   <body>
-    <h1>Tirar Fotos 3x4</h1>
-    <div>
-      <form id="controls">
-        <input type="text" id="num" placeholder="Numero da Chamada:" />
-        <button id="sub" type="submit">Tirar Foto</button>
-        <a id="dow" target="_blank">Download</a>
-      </form>
-      <div>
-        <div id="main">
-          <div id="linhasV"></div>
-          <div id="linhasH"></div>
-          <video id="prev"></video>
-        </div>
-        <canvas id="foto"></canvas>
-      </div>
-    </div>
+    <video id="prev" autoplay controls></video>
 
-    <audio src="som.mp3" id="som"/>
+    <audio src="som.mp3" id="som" />
 
     <script>
       var video = document.querySelector("#prev");
       var btn = document.querySelector("#sub");
       var dow = document.querySelector("#dow");
       var id = document.querySelector("#num");
-      const start = () => {
-        navigator.mediaDevices
-          .getUserMedia({
-            video: { width: 590, height: 590, aspectRatio: 4 / 4, deviceId: {exact: "f76cd3909176579d9d25221486ebe869a021f04167a99c89e037123d22072adc"} },
-          })
-          .then((media) => {
-            video.srcObject = media;
-            video.play();
-          });
+      const start = async () => {
+        var config = {
+          video: {
+            deviceId: {
+              exact:
+                "f76cd3909176579d9d25221486ebe869a021f04167a99c89e037123d22072adc",
+            },
+          },
+        };
+        var config2 = {
+          video: true
+        };
+        media = await navigator.mediaDevices.getUserMedia(config2);
+        video.srcObject = media;
       };
 
       addEventListener("DOMContentLoaded", () => {
         start();
-      });
-
-      function downloadFile(filePath, fileName) {
-        var link = document.createElement("a");
-        link.href = filePath;
-        link.download = fileName;
-        link.click();
-      }
-
-      function foto() {
-        var foto = document.querySelector("#foto");
-        foto.width = video.videoWidth;
-        foto.height = video.videoHeight;
-        var context = foto.getContext("2d");
-        context.drawImage(video, 0, 0);
-        var url = foto.toDataURL("image/jpeg", 1.0);
-        url.replace("image/jpeg", "image/octet-stream");
-        dow.href = url;
-        downloadFile(url, `${id.value}.jpeg`);
-      }
-
-      function som(){
-        var som = document.getElementById("som")
-        som.play()
-      }
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        som();
-        foto();
       });
     </script>
   </body>
